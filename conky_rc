@@ -85,7 +85,7 @@ use_spacer none
 own_window_argb_visual no
 own_window_argb_value 0
 TEXT
-${execi 300 curl -s "https://query.yahooapis.com/v1/public/yql?q=select+*+from+weather.forecast+where+woeid+in+(select+woeid+from+geo.places(1)+where+text%3d%22Setubal%22)+and+u%3d%22c%22" -o ~/.cache/conky/weather.xml}
+${execi 300 curl -s "https://query.yahooapis.com/v1/public/yql?q=select+*+from+weather.forecast+where+woeid+in+(select+woeid+from+geo.places(1)+where+text%3d%22Localização%22)+and+u%3d%22c%22" -o ~/.cache/conky/weather.xml}
 ${voffset -25}$alignr${font Play:size=10}${color cccccc}${execi 300 grep "yweather:location" ~/.cache/conky/weather.xml | grep -o "city=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*"}, ${execi 300 grep "yweather:location" ~/.cache/conky/weather.xml | grep -o "country=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*"}${font}${color}
 ${voffset -2}  ${color eeeeee}${font Play:bold:size=10}${execi 300 grep "yweather:condition" ~/.cache/conky/weather.xml | grep -o "text=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | tr '[a-z]' '[A-Z]' | awk 'NR==1{print $1}'} ${execi 300 grep "yweather:condition" ~/.cache/conky/weather.xml | grep -o "text=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | tr '[a-z]' '[A-Z]' | awk 'NR==1{print $2}'}${execi 300 grep "yweather:condition" ~/.cache/conky/weather.xml | grep -o "text=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | tr '[a-z]' '[A-Z]' | awk 'NR==1{print $3}'}${font}
 ${voffset -8}${color bbbbbb}${font Play:size=45}${alignr}${execi 300 grep "yweather:condition" ~/.cache/conky/weather.xml | grep -o "temp=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*"}${voffset -25}${font Play:bold:size=12}°C${font}${voffset 10}$color
