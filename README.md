@@ -3,7 +3,7 @@
 Configuração do Conky para o Linux Mint em português.
 Um tema para o Conky com suporte meteorológico do Yahoo! (em inglês), mais uma variedade de funções, todas elas traduzidas para português: data e hora, info de sistema, discos, memória, processos, etc.
 
-# INSTALAÇÂO:
+# INSTALAÇÃO:
 
 - Copie ou extraia a pasta “conky_mint_pt” (“conky-google-now”, “fontes”, “logos” e os ficheiros “conkyrc” e “conky-startup.sh”)  para a pasta “~/.conky”. Se esta não existir, crie-a (~/.conky/conky_mint_pt/).
 
