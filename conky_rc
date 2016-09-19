@@ -1,0 +1,136 @@
+# Use Xft?
+use_xft yes
+xftfont mono:size=10
+xftalpha 0.8
+text_buffer_size 2048
+
+# Intervalo de atualização em segundos
+update_interval 1
+
+# Este é o número de vezes Conky irá atualizar antes de sair.
+# Defina como zero para correr para sempre.
+total_run_times 0
+
+# Criar própria janela em vez de usar área de trabalho (necessário no Nautilus)
+own_window yes
+own_window_transparent yes
+own_window_type dock
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+
+# Use o duble buffer (reduz a cintilação, pode não funcionar para todos.)
+double_buffer yes
+
+# Tamanho mínimo de área de texto
+minimum_size 600 600
+maximum_width 275
+
+# Desenhe sombras?
+draw_shades no
+
+# Desenhar os contornos?
+draw_outline no
+
+# Desenhar bordas em torno de texto?
+draw_borders no
+
+# Desenhar bordas ao redor de gráficos?
+draw_graph_borders yes
+
+# Bordas pontilhadas?
+stippled_borders 0
+
+# Margens das bordas
+# border_margin 1
+
+# largura da borda
+border_width 0
+
+# Cores padrão e também cores das bordas
+default_color white
+#default_shade_color black
+#default_outline_color black
+own_window_colour EAEAEA
+
+# Alinhamento do texto, outros valores possíveis são comentados.
+#alignment top_left
+alignment top_left
+#alignment bottom_left
+#alignment bottom_right
+
+# Hiato entre bordas da tela e do texto
+# Mesma coisa que passar -x na linha de comando
+gap_x 980
+gap_y 15
+
+# Subtrair arquivos de buffers do sistema na memória usada?
+no_buffers yes
+
+# Configure para "yes" se você quer todo o texto em letras maiúsculas.
+uppercase no
+
+# Número de amostras de CPU para a média.
+# definido como 1 para desativar média.
+cpu_avg_samples 4
+
+# Número de amostras da NET para calcular a média
+# definido como 1 para desativar média.
+net_avg_samples 2
+
+# Forçar UTF 8? Observe que o suporte a UTF 8 exige XFT.
+override_utf8_locale yes
+
+# Adicionar espaços para evitar que as coisas se movam? Isto só afecta determinados objetos.
+use_spacer none
+
+own_window_argb_visual no
+own_window_argb_value 0
+TEXT
+${execi 300 curl -s "https://query.yahooapis.com/v1/public/yql?q=select+*+from+weather.forecast+where+woeid+in+(select+woeid+from+geo.places(1)+where+text%3d%22Setubal%22)+and+u%3d%22c%22" -o ~/.cache/conky/weather.xml}
+${voffset -25}$alignr${font Play:size=10}${color cccccc}${execi 300 grep "yweather:location" ~/.cache/conky/weather.xml | grep -o "city=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*"}, ${execi 300 grep "yweather:location" ~/.cache/conky/weather.xml | grep -o "country=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*"}${font}${color}
+${voffset -2}  ${color eeeeee}${font Play:bold:size=10}${execi 300 grep "yweather:condition" ~/.cache/conky/weather.xml | grep -o "text=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | tr '[a-z]' '[A-Z]' | awk 'NR==1{print $1}'} ${execi 300 grep "yweather:condition" ~/.cache/conky/weather.xml | grep -o "text=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | tr '[a-z]' '[A-Z]' | awk 'NR==1{print $2}'}${execi 300 grep "yweather:condition" ~/.cache/conky/weather.xml | grep -o "text=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | tr '[a-z]' '[A-Z]' | awk 'NR==1{print $3}'}${font}
+${voffset -8}${color bbbbbb}${font Play:size=45}${alignr}${execi 300 grep "yweather:condition" ~/.cache/conky/weather.xml | grep -o "temp=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*"}${voffset -25}${font Play:bold:size=12}°C${font}${voffset 10}$color
+${voffset -15}${execi 300 cp -f ~/.conky/conky_mint_pt/.conky-google-now/$(grep "yweather:condition" ~/.cache/conky/weather.xml | grep -o "code=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==1').png ~/.cache/conky/weather.png}${image ~/.cache/conky/weather.png -p 50,20 -s 95x73}
+${voffset 5}${color 777777}${stippled_hr}$color
+${voffset -10}${font Play:bold:size=8}${voffset 10}${goto 18}${execi 300 grep "yweather:forecast" ~/.cache/conky/weather.xml | grep -o "day=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==1' | tr '[a-z]' '[A-Z]'}${goto 90}${execi 300 grep "yweather:forecast" ~/.cache/conky/weather.xml | grep -o "day=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==2' | tr '[a-z]' '[A-Z]'}${goto 158}${execi 300 grep "yweather:forecast" ~/.cache/conky/weather.xml | grep -o "day=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==3' | tr '[a-z]' '[A-Z]'}${goto 225}${execi 300 grep "yweather:forecast" ~/.cache/conky/weather.xml | grep -o "day=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==4' | tr '[a-z]' '[A-Z]'}$font
+##_Ícones de meteorologia.
+${execi 300 cp -f ~/.conky/conky_mint_pt/.conky-google-now/$(grep "yweather:forecast" ~/.cache/conky/weather.xml | grep -o "code=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==2').png ~/.cache/conky/weather-1.png}${image ~/.cache/conky/weather-1.png -p 0,126 -s 40x28}${execi 300 cp -f ~/.conky/conky_mint_pt/.conky-google-now/$(grep "yweather:forecast" ~/.cache/conky/weather.xml | grep -o "code=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==3').png ~/.cache/conky/weather-2.png}${image ~/.cache/conky/weather-2.png -p 63,126 -s 40x28}${execi 300 cp -f ~/.conky/conky_mint_pt/.conky-google-now/$(grep "yweather:forecast" ~/.cache/conky/weather.xml | grep -o "code=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==4').png ~/.cache/conky/weather-3.png}${image ~/.cache/conky/weather-3.png -p 132,126 -s 40x28}${execi 300 cp -f ~/.conky/conky_mint_pt/.conky-google-now/$(grep "yweather:forecast" ~/.cache/conky/weather.xml | grep -o "code=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==5').png ~/.cache/conky/weather-4.png}${image ~/.cache/conky/weather-4.png -p 195,126 -s 40x28}
+## Texto de Meteorologia.
+${voffset -15}${goto 42}${execi 300 grep "yweather:forecast" ~/.cache/conky/weather.xml | grep -o "high=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==1'}°${goto 109}${execi 300 grep "yweather:forecast" ~/.cache/conky/weather.xml | grep -o "high=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==2'}°${goto 175}${execi 300 grep "yweather:forecast" ~/.cache/conky/weather.xml | grep -o "high=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==3'}°${goto 240}${execi 300 grep "yweather:forecast" ~/.cache/conky/weather.xml | grep -o "high=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==4'}°
+${goto 42}${execi 300 grep "yweather:forecast" ~/.cache/conky/weather.xml | grep -o "low=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==1'}°${goto 109}${execi 300 grep "yweather:forecast" ~/.cache/conky/weather.xml | grep -o "low=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==2'}°${goto 175}${execi 300 grep "yweather:forecast" ~/.cache/conky/weather.xml | grep -o "low=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==3'}°${goto 240}${execi 300 grep "yweather:forecast" ~/.cache/conky/weather.xml | grep -o "low=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==4'}°
+${font Play:bold:size=8}${color orange}Data e Hora ${hr 2}
+${color white} ${font :bold:size=25}$alignc${time %H:%M}
+${voffset -28}${font :bold:size=9}$alignc${time %d %b. %Y}
+${font :bold:size=9}$alignc${time %A}${voffset 5}
+${font Play:bold:pixelsize=13}${color orange}Actualizações do Sistema ${hr 2}
+${font Play:bold:pixelsize=13}${color}Actualizações pendentes: ${color green}${execi 3600 aptitude search "~U" | wc -l | tail}${voffset 4}
+${font :bold:size=8}${color orange}Sistema ${hr 2}
+${goto 55}${color}Linux Mint ${execi 86400 awk -F'=' '/DISTRIB_RELEASE=/ {printf $2" "}' /etc/lsb-release}
+${goto 55}${color}${kernel}-${machine}
+${goto 55}${color}Tempo Ligado:${color green}$alignr${uptime}${voffset 5}
+${voffset -12}${image logos/Mint.png -p 0,299 -s 50x50}
+${color orange}Recursos ${hr 2}${voffset 2}
+${color 77d3f4}${execi 300 cat /proc/cpuinfo |grep 'model name'|sort -u|awk -F: '{ print $2; }'|awk -F: \ '{print $1}'}
+${color}CPU1 ${color green}${cpu cpu1}%${alignr}${color green}${cpubar cpu1 10,60}
+${color}CPU2 ${color B3FF66}${cpu cpu2}%${alignr}${color B3FF66}${cpubar cpu2 10,60}
+${color}CPU3 ${color 008080}${cpu cpu3}%${alignr}${color 008080}${cpubar cpu3 10,60}
+${color}CPU4 ${color 006020}${cpu cpu4}%${alignr}${color 006020}${cpubar cpu4 10,60}${voffset 8}
+${color}Mem:  ${color yellow}${mem}/${memmax}${alignr}${color yellow}${membar 10,60}
+${color}Swap: ${color purple}${swap}/${swapmax}${alignr}${color purple}${swapbar 10,60}${voffset 8}
+${color}Download: ${color violet}${downspeedf enp4s0} KB/s ${alignr}${color violet}${downspeedgraph enp4s0 10,60}
+${color}Total Recebido:${alignr}${totaldown enp4s0}
+${color}Upload:   ${color light blue}${upspeedf enp4s0} KB/s ${alignr}${color light blue}${upspeedgraph enp4s0 10,60}
+${color}Total Enviado:${alignr}${totalup enp4s0}${voffset 5}
+${color orange}Partições do Sistema ${hr 2}
+${color}/ROOT:  ${color grey}${fs_used /}/${fs_size /}${alignr}${color grey}${fs_bar 10,60 /}
+${color}/HOME:  ${color pink}${fs_used /home}/${fs_size /home}${alignr}${color pink}${fs_bar 10,60 /home}${voffset 5}
+${color orange}Processos ${hr 2}
+${color green}Comando${alignr}CPU%
+${color}${top name 1}${alignr}${top cpu 1}
+${color}${top name 2}${alignr}${top cpu 2}
+${color}${top name 3}${alignr}${top cpu 3}
+${color}${top name 4}${alignr}${top cpu 4}${voffset 5}
+${color green}Comando${alignr}MEM
+${color}${top_mem name 1}${alignr}${top_mem mem_res 1}
+${color}${top_mem name 2}${alignr}${top_mem mem_res 2}
+${color}${top_mem name 3}${alignr}${top_mem mem_res 3}
+${color}${top_mem name 4}${alignr}${top_mem mem_res 4}
