@@ -5,7 +5,7 @@ Um tema para o Conky com suporte meteorológico do Yahoo! (em inglês), mais uma
 
 # INSTALAÇÃO:
 
-- Copie ou extraia a pasta “conky-mint-pt-master” (“conky-google-now”, “fontes”, “logos” e os ficheiros “conkyrc” e “conky-startup.sh”)  para a pasta “~/.conky”. Se esta não existir, crie-a (~/.conky/conky-mint-pt/).
+- Copie ou extraia a pasta “conky-mint-pt-master” (“conky-google-now”, “fontes”, “logos” e os ficheiros “conkyrc” e “conky-startup.sh”)  para a pasta “~/.conky”. Se esta não existir, crie-a "~/.conky/conky-mint-pt/", apague a palavra "-master".
 
 - Crie uma pasta em “~/.cache/” com o nome conky, nesta pasta ficarão os ficheiros temporários relacionados com a meteorologia (~/.cache/conky).
 
