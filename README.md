@@ -13,7 +13,7 @@ Um tema para o Conky com suporte meteorológico do Yahoo! (em inglês), mais uma
 
 - Instale as fontes Play da pasta “fontes”, por exemplo a partir de um visualizador de fontes tal como o gnome-font-viewer( instale este pelo terminal $ sudo apt-get install gnome-font-viewer).
 
-- Faça o script “conky-startup,sh” arrancar no inicio do sistema.
+- Faça o script “conky-startup.sh” arrancar no inicio do sistema.
 Aceda a Definições>Sessão e arranque>Aplicações automáticas>Adicionar>Nome = Conky e Comando = sh ~/.conky/conky-mint-pt/conky-startup.sh .
 
 E pronto, espero que gostem!
