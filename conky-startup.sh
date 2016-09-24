@@ -1,4 +1,4 @@
 sleep 20s
 killall conky
-cd ~/.conky/conky_mint_pt/
-conky -c ~/.conky/conky_mint_pt/conky_rc &
+cd ~/.conky/conky-mint-pt/
+conky -c ~/.conky/conky-mint-pt/conky_rc &
