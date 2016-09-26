@@ -113,6 +113,7 @@ ${goto 60}${color #b4ebff}CPU1 ${color #b4ebff}${cpu cpu1}%${alignr}${color #b4e
 ${goto 60}${color #77d3f4}CPU2 ${color #77d3f4}${cpu cpu2}%${alignr}${color #77d3f4}${cpubar cpu2 10,60}
 ${goto 60}${color #33b5e5}CPU3 ${color #33b5e5}${cpu cpu3}%${alignr}${color #33b5e5}${cpubar cpu3 10,60}
 ${goto 60}${color #0099cc}CPU4 ${color #0099cc}${cpu cpu4}%${alignr}${color #0099cc}${cpubar cpu4 10,60}${voffset 8}
+${color}GPU VRAM: ${color yellow}${execi 5 nvidia-smi | grep % | cut -c 37-40}/${exec nvidia-smi | grep % | cut -c 48-51}MiB ${alignr}${color}GPU Temp: ${color yellow}${nvidia temp}°C
 ${color}Mem:  ${color yellow}${mem}/${memmax}${alignr}${color yellow}${membar 10,60}
 ${color}Swap: ${color yellow}${swap}/${swapmax}${alignr}${color yellow}${swapbar 10,60}${voffset 8}
 ${color}Download: ${color violet}${downspeedf enp4s0} KB/s ${alignr}${color violet}${downspeedgraph enp4s0 10,60}
