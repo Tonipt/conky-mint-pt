@@ -9,7 +9,7 @@ Um tema para o Conky com uma barra informativa com uma variedade de funções, t
 
 - Crie uma pasta em “~/.cache/” com o nome conky, nesta pasta ficarão os ficheiros temporários relacionados com a meteorologia (~/.cache/conky).
 
-- Personalize a sua localização no ficheiro yahoometeo, substitua a palavra "localização" na linha 88 pelo nome da sua cidade em inglês. (exemplos que funcionam: “Setubal” ou “Lisbon”.)
+- Personalize a sua localização no ficheiro yahoometeo, substitua a localização pelo nome da sua cidade em inglês. (exemplos que funcionam: “Setubal” ou “Lisbon”.)
 
 - Instale as fontes Play da pasta “fontes”, por exemplo a partir de um visualizador de fontes tal como o gnome-font-viewer( instale este pelo terminal $ sudo apt-get install gnome-font-viewer).
 
