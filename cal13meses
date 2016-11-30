@@ -1,0 +1,73 @@
+conky.config = {
+-- ------------------------- Configuração das janelas
+	own_window = true,
+	own_window_type = 'desktop',
+--	own_window_type = 'override',
+--	own_window_type = 'dock',
+	own_window_transparent = false,
+	own_window_colour = '000000',
+	own_window_hints = 'undecorated,sticky,below,skip_taskbar,skip_pager',
+	own_window_argb_visual = true,
+	own_window_argb_value = 130,
+
+	double_buffer = true,
+	background = true,
+
+-- ------------------------- Posição
+	alignment = 'top_left',
+
+	minimum_width = 600, 
+	minimum_height = 600,
+	maximum_width = 1024,
+	gap_x = 369,
+	gap_y = 5,
+
+-- ------------------------- Contornos
+	draw_outline = false,
+	draw_borders = false,
+	border_width = 2,
+	stippled_borders = 5,
+
+	draw_graph_borders = true,
+
+-- ------------------------- Fontes
+	use_xft = true,
+	xftalpha = 0.1,
+	override_utf8_locale = true,
+
+	draw_shades = true,
+	uppercase = false,
+
+
+-- ------------------------- Cor
+	default_color = '0ABFFF',
+	color0 = '8FBC8F', -- DarkSeaGreen
+	color1 = '778899', -- LightSlateGray
+	color2 = 'F5F5DC', -- Beige
+	color3 = '87CEFA', -- LightSkyBlue
+	color4 = '48D1CC', -- MediumTurquoise
+	color5 = 'FFDEAD', -- NavajoWhite
+	color6 = '23e923', -- GreenStadion
+	color7 = 'B0E0E6', -- PowderBlue
+	color8 = 'FFD700', -- Gold
+	color9 = 'DC143C', -- Crimson
+-- ------------------------- Outros
+	update_interval = 5,
+
+};
+
+conky.text = [[
+${color 000000}${stippled_hr}
+${color4}${voffset 45}${goto 50}${font Flash Gordon :bold:size=50}${time %H:%M}${color}
+${voffset -140}${font Ubuntu Mono :size=13}${execpi 300 DIA=`date -d "now" | awk '{print $3}'`; cal -h | sed -e 's/\<'$DIA'\>/${color6}&${color}/' | sed -e '1s/[a-z A-Z 0-9]/${color7}&${color}/g' | sed 's/Do Se Te Qu Qu Se Sá/${color8}&${color}/' | sed -e 's/^/${offset 210}/'}
+${color0}${goto 442}${voffset -95}${font Xirod :bold:size=15}${time %A}
+${color7}${goto 418}${voffset 0}${font :bold:size=12}${time %d %B %Y}${color}
+${voffset 50}${hr 1}${font Ubuntu Mono :size=13}
+${execpi 900 cal -h3 $(date -d "+2 months" | awk '{print $2,$6}') | sed -e '1s/[a-z A-Z 0-9]/${color7}&${color}/g' | sed 's/Do Se Te Qu Qu Se Sá/${color8}&${color}/g'| sed -e 's/^/${offset 10}/'}
+${hr 1}
+${execpi 900 cal -h3 $(date -d "+5 months" | awk '{print $2,$6}')| sed -e '1s/[a-z A-Z 0-9]/${color7}&${color}/g' | sed 's/Do Se Te Qu Qu Se Sá/${color8}&${color}/g'| sed -e 's/^/${offset 10}/'}
+${hr 1}
+${execpi 900 cal -h3 $(date -d "+8 months" | awk '{print $2,$6}') | sed -e '1s/[a-z A-Z 0-9]/${color7}&${color}/g' | sed 's/Do Se Te Qu Qu Se Sá/${color8}&${color}/g'| sed -e 's/^/${offset 10}/'}
+${hr 1}
+${execpi 900 cal -h3 $(date -d "+11 months" | awk '{print $2,$6}') | sed -e '1s/[a-z A-Z 0-9]/${color7}&${color}/g' | sed 's/Do Se Te Qu Qu Se Sá/${color8}&${color}/g'| sed -e 's/^/${offset 10}/'}
+]];

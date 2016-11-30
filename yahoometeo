@@ -1,0 +1,81 @@
+conky.config = {
+-- ------------------------- Configuração das janelas
+	own_window = true,
+	own_window_type = 'desktop',
+--	own_window_type = 'override',
+--	own_window_type = 'dock',
+	own_window_transparent = false,
+	own_window_colour = '000000',
+	own_window_hints = 'undecorated,sticky,below,skip_taskbar,skip_pager',
+	own_window_argb_visual = true,
+	own_window_argb_value = 130,
+
+	double_buffer = true,
+	background = true,
+
+-- ------------------------- Posição
+	alignment = 'bottom_left',
+
+	minimum_width = 355, 
+	minimum_height = 355,
+	maximum_width = 360,
+	gap_x = 5,
+	gap_y = 5,
+
+-- ------------------------- Contornos
+	draw_outline = false,
+	draw_borders = true,
+	border_width = 2,
+	stippled_borders = 5,
+
+	draw_graph_borders = false,
+
+-- ------------------------- Fontes
+	use_xft = true,
+	xftalpha = 0.8,
+	override_utf8_locale = true,
+	text_buffer_size = 2048,
+	draw_shades = false,
+	uppercase = false,
+
+-- ------------------------- Cor
+	default_color = '0ABFFF',
+	color0 = '8FBC8F', -- DarkSeaGreen
+	color1 = '778899', -- LightSlateGray
+	color2 = 'F5F5DC', -- Beige
+	color3 = '87CEFA', -- LightSkyBlue
+	color4 = '48D1CC', -- MediumTurquoise
+	color5 = 'FFDEAD', -- NavajoWhite
+	color6 = '23e923', -- GreenStadion
+	color7 = 'B0E0E6', -- PowderBlue
+	color8 = 'FFD700', -- Gold
+	color9 = 'DC143C', -- Crimson
+
+-- ------------------------- Outros
+	update_interval = 5,
+	no_buffers = true,
+	imlib_cache_size=0,
+
+	cpu_avg_samples = 2,
+	net_avg_samples = 2,
+	use_spacer = 'none',
+};
+
+conky.text = [[
+${execi 300 curl -s "https://query.yahooapis.com/v1/public/yql?q=select+*+from+weather.forecast+where+woeid+in+(select+woeid+from+geo.places(1)+where+text%3d%22Évora%22)+and+u%3d%22c%22" -o ~/.cache/conky/weather.xml}
+${voffset 0}${goto 180}${font Play:size=14}${color2}${execi 300 grep "yweather:location" ~/.cache/conky/weather.xml | grep -o "region=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*"}, ${execi 300 grep "yweather:location" ~/.cache/conky/weather.xml | grep -o "country=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*"}${font}${color}
+${voffset 0}${goto 150}${font Play:size=8}${color7}Nascer do Sol: ${execi 300 grep "yweather:location" ~/.cache/conky/weather.xml | grep -o "sunrise=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*"}	Por do Sol: ${execi 300 grep "yweather:location" ~/.cache/conky/weather.xml | grep -o "sunset=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*"}${font}${color}
+${voffset 0}${color8}${font Play:bold:size=15}${goto 20}${execi 300 grep "yweather:condition" ~/.cache/conky/weather.xml | grep -o "text=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | tr '[a-z]' '[A-Z]' | awk 'NR==1{print $1}'} ${execi 300 grep "yweather:condition" ~/.cache/conky/weather.xml | grep -o "text=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | tr '[a-z]' '[A-Z]' | awk 'NR==1{print $2}'}${execi 300 grep "yweather:condition" ~/.cache/conky/weather.xml | grep -o "text=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | tr '[a-z]' '[A-Z]' | awk 'NR==1{print $3}'}${font}
+${voffset -15}${color0}${font Play:size=75}${goto 135}T=${execi 300 grep "yweather:condition" ~/.cache/conky/weather.xml | grep -o "temp=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*"}${voffset -25}${font Play:bold:size=25}°C${font}${voffset 0}$color
+${voffset 0}${execi 300 cp -f ~/.conky/meu-conky/.conky-google-now/$(grep "yweather:condition" ~/.cache/conky/weather.xml | grep -o "code=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==1').png ~/.cache/conky/weather.png}${image ~/.cache/conky/weather.png -p 2,75 -s 130x105}
+${voffset 10}${font Play:size=9}${goto 20}Humidade:${alignc}Visibilidade:
+${goto 35}${font Play:size=9}${execi 300 grep "yweather:location" ~/.cache/conky/weather.xml | grep -o "humidity=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*"}%${alignc}${execi 300 grep "yweather:location" ~/.cache/conky/weather.xml | grep -o "visibility=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*"}km
+${voffset 5}${color1}${stippled_hr}${color}
+## ------------------------------- Texto da Semana
+${voffset 0}${font Play:bold:size=8}${voffset 10}${goto 20}${execi 300 grep "yweather:forecast" ~/.cache/conky/weather.xml | grep -o "day=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==1' | tr '[a-z]' '[A-Z]'}${goto 91}${execi 300 grep "yweather:forecast" ~/.cache/conky/weather.xml | grep -o "day=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==2' | tr '[a-z]' '[A-Z]'}${goto 162}${execi 300 grep "yweather:forecast" ~/.cache/conky/weather.xml | grep -o "day=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==3' | tr '[a-z]' '[A-Z]'}${goto 233}${execi 300 grep "yweather:forecast" ~/.cache/conky/weather.xml | grep -o "day=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==4' | tr '[a-z]' '[A-Z]'}${goto 304}${execi 300 grep "yweather:forecast" ~/.cache/conky/weather.xml | grep -o "day=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==5' | tr '[a-z]' '[A-Z]'}$font
+## -------------------------------- Ícones de meteorologia.
+${execi 300 cp -f ~/.conky/meu-conky/.conky-google-now/$(grep "yweather:forecast" ~/.cache/conky/weather.xml | grep -o "code=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==2').png ~/.cache/conky/weather-1.png}${image ~/.cache/conky/weather-1.png -p 0,261 -s 40x28}${execi 300 cp -f ~/.conky/meu-conky/.conky-google-now/$(grep "yweather:forecast" ~/.cache/conky/weather.xml | grep -o "code=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==3').png ~/.cache/conky/weather-2.png}${image ~/.cache/conky/weather-2.png -p 68,261 -s 40x28}${execi 300 cp -f ~/.conky/meu-conky/.conky-google-now/$(grep "yweather:forecast" ~/.cache/conky/weather.xml | grep -o "code=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==4').png ~/.cache/conky/weather-3.png}${image ~/.cache/conky/weather-3.png -p 140,261 -s 40x28}${execi 300 cp -f ~/.conky/meu-conky/.conky-google-now/$(grep "yweather:forecast" ~/.cache/conky/weather.xml | grep -o "code=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==5').png ~/.cache/conky/weather-4.png}${image ~/.cache/conky/weather-4.png -p 211,261 -s 40x28}${execi 300 cp -f ~/.conky/meu-conky/.conky-google-now/$(grep "yweather:forecast" ~/.cache/conky/weather.xml | grep -o "code=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==6').png ~/.cache/conky/weather-5.png}${image ~/.cache/conky/weather-5.png -p 281,261 -s 40x28}
+## -------------------------------- Texto Temperaturas de Meteorologia.
+${voffset -20}${goto 45}${execi 300 grep "yweather:forecast" ~/.cache/conky/weather.xml | grep -o "high=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==1'}°${goto 116}${execi 300 grep "yweather:forecast" ~/.cache/conky/weather.xml | grep -o "high=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==2'}°${goto 187}${execi 300 grep "yweather:forecast" ~/.cache/conky/weather.xml | grep -o "high=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==3'}°${goto 258}${execi 300 grep "yweather:forecast" ~/.cache/conky/weather.xml | grep -o "high=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==4'}°${goto 329}${execi 300 grep "yweather:forecast" ~/.cache/conky/weather.xml | grep -o "high=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==5'}°
+${goto 45}${execi 300 grep "yweather:forecast" ~/.cache/conky/weather.xml | grep -o "low=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==1'}°${goto 116}${execi 300 grep "yweather:forecast" ~/.cache/conky/weather.xml | grep -o "low=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==2'}°${goto 187}${execi 300 grep "yweather:forecast" ~/.cache/conky/weather.xml | grep -o "low=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==3'}°${goto 258}${execi 300 grep "yweather:forecast" ~/.cache/conky/weather.xml | grep -o "low=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==4'}°${goto 329}${execi 300 grep "yweather:forecast" ~/.cache/conky/weather.xml | grep -o "low=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==5'}°
+]];

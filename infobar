@@ -1,0 +1,156 @@
+conky.config = {
+-- ------------------------- Configuração das janelas
+	own_window = true,
+	own_window_type = 'desktop',
+	own_window_transparent = false,
+	own_window_colour = '000000',
+	own_window_hints = 'undecorated,sticky,below,skip_taskbar,skip_pager',
+	own_window_argb_visual = true,
+	own_window_argb_value = 130,
+
+	double_buffer = true,
+	background = true,
+
+	draw_borders = false,
+	border_width = 6,
+	border_inner_margin = 0,
+	default_outline_color = white,
+	draw_graph_borders = true,
+	draw_outline = false,
+-- ------------------------- Posição
+	alignment = 'bottom_right',
+
+	minimum_width = 180, 
+	minimum_height = 0,
+	maximum_width = 1024,
+	gap_x = 5,
+	gap_y = 20,
+
+-- ------------------------- Fontes
+	use_xft = true,
+	xftalpha = 0.1,
+	font = 'Droid Sans:size=8',
+	override_utf8_locale = true,
+
+	default_shade_color = white,
+	draw_shades = false,
+	uppercase = false,
+-- ------------------------- Cor
+	default_color = 'F5F5DC', -- Beige
+	color = '8FBC8F', -- DarkSeaGreen
+	color1 = '778899', -- LightSlateGray
+	color2 = '0ABFFF', -- MarineBlue
+	color3 = '87CEFA', -- LightSkyBlue
+	color4 = '48D1CC', -- MediumTurquoise
+	color5 = 'FFDEAD', -- NavajoWhite
+	color6 = '23e923', -- GreenStadion
+	color7 = 'B0E0E6', -- PowderBlue
+	color8 = 'FFD700', -- Gold
+	color9 = 'DC143C', -- Crimson
+
+-- ------------------------- Outros
+	update_interval = 5,
+
+	cpu_avg_samples = 2,
+	net_avg_samples = 2,
+	no_buffers = true,
+	out_to_console = false,
+    out_to_stderr = false,
+--	extra_newline = false,
+	use_spacer = 'none',
+	show_graph_scale = false,
+	show_graph_range = false,
+	pad_percents = 3,
+    temperature_unit = 'celsius',
+ 	top_cpu_separate = false,
+	interface = 'enp4s0'
+};
+
+conky.text = [[
+${voffset -10}\
+#-------------------------------------------------------------------------------
+#                                    Data e Hora
+#-------------------------------------------------------------------------------
+${color2}${voffset 1}${hr 1}${color}
+${color2}${alignc}Data e Hora${color}
+${color2}${voffset -6}${hr 1}${color}
+${goto 30}${color}${font :bold:size=25}${time %H:%M}${font :bold:size=9}${goto 165}${voffset 5}${time %d %B %Y}${goto 150}${font Xirod :bold:size=12}${voffset -20}${time %A}${font}${voffset 20}
+#-------------------------------------------------------------------------------
+#                                    Sistema
+#-------------------------------------------------------------------------------
+${color2}${voffset 1}${hr 1}${color}
+${color2}${alignc}Sistema${color}
+${color2}${voffset -6}${hr 1}${color}
+${color2}Distro:${goto 48}${color}${execi 86400 lsb_release -d -s}
+${color2}Kernel:${goto 48}${color}${kernel}-${machine}
+#${color2}Desktop:${color}${execi 86400 env | grep MDMSESSION | awk -F '=' '{print $2}'| tr [a-z] [A-Z]}
+${color2}Desktop: ${color}${execi 86400 inxi -xxx -S | grep 'Desktop:' | tr [a-z] [A-Z] | awk '{print $2,$3}'}
+${color2}Tempo de actividade:${color}${goto 130}${uptime_short}
+#-------------------------------------------------------------------------------
+#                                   CPU
+#-------------------------------------------------------------------------------
+${color2}${voffset 1}${hr 1}${color}
+${color2}${color2}${alignc}Processador${color}
+${color2}${voffset -6}${hr 1}
+$alignc${color2}${execi 86400 head /proc/cpuinfo | grep 'model name' | sed -e 's/model name.*: //'}${voffset 5}
+${goto 30}${color2}CPU total:${goto 90}${color}${cpu cpu0}%${goto 112}${cpubar cpu0 6,75}${alignr}${color2}${font :size=7}Load: ${color}${loadavg}${font}
+$alignc${cpugraph cpu1 25,120}    ${cpugraph cpu2 25,120}${voffset 6}
+${font}${voffset -37}${goto 27}CPU1${color2}${goto 75}[${cpu cpu1}%]${goto 210}[${cpu cpu2}%]${goto 162}${color}CPU2${voffset 5}${color}
+$alignc${cpugraph cpu3 25,120}    ${cpugraph cpu4 25,120}${voffset 6}
+${font}${voffset -37}${goto 27}CPU3${color2}${goto 75}[${cpu cpu3}%]${goto 210}[${cpu cpu4}%]${goto 162}${color}CPU4${voffset 10}${color}
+# top processes hogging CPU time: top_time (cumulative time) may be more interesting ...
+${color2}${voffset 5}Nome${goto 122}PID${goto 167}CPU%${goto 220}Mem%$color${voffset 3}
+${top name 1}${goto 115}${top pid 1}${goto 165}${top cpu 1}${goto 215}${top mem 1}
+${top name 2}${goto 115}${top pid 2}${goto 165}${top cpu 2}${goto 215}${top mem 2}
+${top name 3}${goto 115}${top pid 3}${goto 165}${top cpu 3}${goto 215}${top mem 3}
+${top name 4}${goto 115}${top pid 4}${goto 165}${top cpu 4}${goto 215}${top mem 4}
+#-------------------------------------------------------------------------------
+#                                   GPU
+#-------------------------------------------------------------------------------
+# commands to try: scroll, tail
+${color2}${voffset 1}${hr 1}${color}
+${color2}${alignc}GPU${color}
+${color2}${voffset -6}${hr 1}${color}
+${color2}GPU Temp:${goto 78}${color}${nvidia temp}°C${goto 130}${color2}Fan Speed:${goto 195}${color}${execi 50 nvidia-settings -q [fan:0]/GPUTargetFanSpeed -t} %
+${color2}GPU Clock:${goto 78}${color}${nvidia gpufreq} MHz${goto 130}${color2}Mem Clock:${goto 195}${color}${nvidia memfreq} MHz
+${color2}Mem Usada:${goto 78}${color}${execi 10 nvidia-settings -q [gpu:0]/UsedDedicatedGPUMemory -t} MiB / ${execi 86400 nvidia-settings -q [gpu:0]/TotalDedicatedGPUMemory -t} MiB
+#-------------------------------------------------------------------------------
+#                                  Memória
+#-------------------------------------------------------------------------------
+${color2}${voffset 1}${hr 1}$color
+${color2}${alignc}Memória$color
+${color2}${voffset -6}${hr 1}$color
+${color2}RAM:${goto 48}${color}${mem} / ${memmax}${alignr}[${memperc}%]  ${membar 10,100}
+${color2}SWAP:${goto 48}${color}${swap} / ${swapmax}${alignr}[${swapperc}%]  ${swapbar 10,100}
+${color2}${voffset 5}Nome${goto 122}PID${goto 160}CPU%${goto 205}Mem%${alignr}Mem$color${voffset 3}
+${top_mem name 1}${goto 115}${top_mem pid 1}${goto 158}${top_mem cpu 1}${goto 200}${top_mem mem 1}${alignr}${top_mem mem_res 1}
+${top_mem name 2}${goto 115}${top_mem pid 2}${goto 158}${top_mem cpu 2}${goto 200}${top_mem mem 2}${alignr}${top_mem mem_res 2}
+${top_mem name 3}${goto 115}${top_mem pid 3}${goto 158}${top_mem cpu 3}${goto 200}${top_mem mem 3}${alignr}${top_mem mem_res 3}
+${top_mem name 4}${goto 115}${top_mem pid 4}${goto 158}${top_mem cpu 4}${goto 200}${top_mem mem 4}${alignr}${top_mem mem_res 4}
+#-------------------------------------------------------------------------------
+#                                    Discos
+#-------------------------------------------------------------------------------
+${color2}${voffset 1}${hr 1}${color}
+${color2}${alignc}Discos$color
+${color2}${voffset -6}${hr 1}${color}
+#${color2}HD read: ${color}${diskio_read}${alignr}${color2}HD write: ${color}${diskio_write}
+${color2}Leitura: ${color}${diskio_read}${alignr}${color2}Escrita: ${color}${diskio_write}
+${voffset 5}${color2}ROOT: ${color}${fs_used /} / ${fs_size /}${alignr}[${fs_used_perc /}%]  ${fs_bar 10,100 /}
+${color2}HOME: ${color}${fs_used /home} / ${fs_size /home}${alignr}[${fs_used_perc /home}%]  ${fs_bar 10,100 /home}${voffset 5}
+#-------------------------------------------------------------------------------
+#                                    Ethernet
+#-------------------------------------------------------------------------------
+${color2}${voffset 1}${hr 1}$color
+${color2}${alignc}Ethernet$color
+${color2}${voffset -6}${hr 1}$color
+${voffset 5}${color2}Down:${color} ${downspeed enp4s0}/s $alignr${color2} Up:${color} ${upspeed enp4s0}/s
+${color}${downspeedgraph enp4s0 20,120 000000 0077ff 180 -t} $alignr${color}${upspeedgraph enp4s0 20,120 000000 0077ff 25 -t}
+${color2}Total: ${color}${totaldown enp4s0}           $alignr${color2}Total: ${color}${totalup enp4s0}
+${color2}Tráf. mensal: ${color}${execi 60 vnstat -m | grep "`date +"%b '%y"`" | awk '{print $3 $4}'}${alignr}${color2}Tráf. mensal: ${color}${execi 60 vnstat -m | grep "`date +"%b '%y"`" | awk '{print $6 $7}'}
+#-------------------------------------------------------------------------------
+#                                   Logotipos
+#-------------------------------------------------------------------------------
+${color}${alignr}${font :size=5}/// Powered by Conky ${conky_version}
+${image logos/Mint.png -p 220,99 -s 60x60}
+${image logos/nvidia-logo.png -p 238,378 -s 50x50}
+]];
