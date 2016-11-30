@@ -19,5 +19,5 @@ E pronto, espero que gostem!
 
 Nota: Esta configuração foi optimizada para uma resolução de ecrã de 1280x800 e definições personalizadas das fontes em 96 PPP, para outras resoluções terão que ser feitas alterações nos ficheiros infobar, cal13meses e yahoometeo.
 Relativamente as partições do disco, este ficheiro está configurado para a existência de uma partição /HOME separada da /ROOT, se o seu sistema não tiver essa separação, pode comentar ou eliminar essa linha referente à partição /HOME.
-A configuração está igualmente optimizada para processadores de 4 núcleos, se o seu não tiver 4 núcleos terá OBRIGATÓRIAMENTE que apagar, ou acrescentar as respectivas linhas de configuração dos CPU no ficheiro conky_rc, de acordo com o seu modelo. E a imagem do logotipo também, claro!
+A configuração está igualmente optimizada para processadores de 4 núcleos, se o seu não tiver 4 núcleos terá OBRIGATÓRIAMENTE que apagar, ou acrescentar as respectivas linhas de configuração dos CPU no ficheiro infobar, de acordo com o seu modelo.
 Quando à placa gráfica, o ficheiro infobar contém linhas de código exclusivas para serem usadas em placas Nvidia.
