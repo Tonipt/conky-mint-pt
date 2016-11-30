@@ -5,7 +5,7 @@ Um tema para o Conky com uma barra informativa com uma variedade de funções, t
 
 # INSTALAÇÃO:
 
-- Copie ou extraia a pasta “conky-mint-pt-meuconky” (“conky-google-now”, “fontes”, “logos” e os ficheiros “infobar” "cal13meses"  "yahoometeo" e “conky-startup.sh”)  para a pasta “~/.conky”. Se esta não existir, crie-a "~/.conky/meuconky/".
+- Copie ou extraia a pasta “conky-mint-pt-meuconky” (“conky-google-now”, “fontes”, “logos” e os ficheiros “infobar” "cal13meses"  "yahoometeo" e “conky-startup.sh”)  para a pasta “~/.conky”. Se esta não existir, crie-a "~/.conky/meu-conky/".
 
 - Crie uma pasta em “~/.cache/” com o nome conky, nesta pasta ficarão os ficheiros temporários relacionados com a meteorologia (~/.cache/conky).
 
@@ -14,7 +14,7 @@ Um tema para o Conky com uma barra informativa com uma variedade de funções, t
 - Instale as fontes Play da pasta “fontes”, por exemplo a partir de um visualizador de fontes tal como o gnome-font-viewer( instale este pelo terminal $ sudo apt-get install gnome-font-viewer).
 
 - Faça o script “conky-startup.sh” arrancar no inicio do sistema.
-Aceda a Definições>Sessão e arranque>Aplicações automáticas>Adicionar>Nome = Conky e Comando = sh ~/.conky/meuconky/conky-startup.sh . O calendário e a previsão do tempo estão desactivados, para activar basta descomentar as respectivas linhas no ficheiro conky-startup.sh .
+Aceda a Definições>Sessão e arranque>Aplicações automáticas>Adicionar>Nome = Conky e Comando = sh ~/.conky/meu-conky/conky-startup.sh . O calendário e a previsão do tempo estão desactivados, para activar basta descomentar as respectivas linhas no ficheiro conky-startup.sh .
 E pronto, espero que gostem!
 
 Nota: Esta configuração foi optimizada para uma resolução de ecrã de 1280x800 e definições personalizadas das fontes em 96 PPP, para outras resoluções terão que ser feitas alterações nos ficheiros infobar, cal13meses e yahoometeo.
